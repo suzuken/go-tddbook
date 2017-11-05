@@ -13,3 +13,7 @@ func NewDollar(amount int) *Dollar {
 func (d *Dollar) times(multiplier int) *Dollar {
 	return NewDollar(d.amount * multiplier)
 }
+
+func (d *Dollar) equals(object interface{}) bool {
+	return true
+}

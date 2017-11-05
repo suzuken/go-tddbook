@@ -15,3 +15,13 @@ func TestMoneyMultiplication(t *testing.T) {
 		t.Errorf("want 15, got %d", product.amount)
 	}
 }
+
+func TestMoneyEquality(t *testing.T) {
+	d := Dollar{5}
+	if !d.equals(Dollar{5}) {
+		t.Errorf("Dollar{5} should equal Dollar{5}, but false")
+	}
+	if d.equals(Dollar{6}) {
+		t.Errorf("want false, got true")
+	}
+}
