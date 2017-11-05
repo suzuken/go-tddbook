@@ -1,16 +1,18 @@
 package money
 
-type Dollar struct {
+type Money struct {
 	amount int
 }
 
-func NewDollar(amount int) *Dollar {
-	return &Dollar{
-		amount: amount,
-	}
+type Dollar struct {
+	Money
 }
 
-func (d *Dollar) times(multiplier int) *Dollar {
+func NewDollar(amount int) Dollar {
+	return Dollar{Money{amount}}
+}
+
+func (d *Dollar) times(multiplier int) Dollar {
 	return NewDollar(d.amount * multiplier)
 }
 
