@@ -1,5 +1,9 @@
 package money
 
+type IMoney interface {
+	amount() int
+}
+
 type Money struct {
 	amount int
 }
@@ -8,17 +12,21 @@ type Dollar struct {
 	Money
 }
 
-func NewDollar(amount int) Dollar {
-	return Dollar{Money{amount}}
+func NewDollar(amount int) *Dollar {
+	return &Dollar{Money{amount}}
 }
 
-func (d *Dollar) times(multiplier int) Dollar {
-	return NewDollar(d.amount * multiplier)
+func (d *Dollar) amount() int {
+	return d.Money.amount
 }
 
-func (d *Dollar) equals(object interface{}) bool {
-	dollar := object.(Dollar)
-	return d.amount == dollar.amount
+func (d *Dollar) times(multiplier int) *Dollar {
+	return NewDollar(d.amount() * multiplier)
+}
+
+func (d *Dollar) equals(dd interface{}) bool {
+	m := dd.(IMoney)
+	return d.amount() == m.amount()
 }
 
 type Franc struct {
