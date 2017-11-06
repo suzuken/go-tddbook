@@ -10,9 +10,10 @@ type Money struct {
 	currency string
 }
 
-func NewMoney(amount int) *Money {
+func NewMoney(amount int, currency string) *Money {
 	return &Money{
-		amount: amount,
+		amount:   amount,
+		currency: currency,
 	}
 }
 
@@ -26,7 +27,7 @@ func (m *Money) equals(object interface{}) bool {
 }
 
 func (m *Money) times(multiplier int) *Money {
-	return NewMoney(m.Amount() * multiplier)
+	return NewMoney(m.Amount()*multiplier, m.currency)
 }
 
 type Dollar struct {
