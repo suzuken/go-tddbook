@@ -25,7 +25,8 @@ func (m *Money) Amount() int {
 
 func (m *Money) equals(object interface{}) bool {
 	mm := object.(IMoney)
-	return m.Amount() == mm.Amount()
+	return m.Amount() == mm.Amount() &&
+		m.Currency() == mm.Currency()
 }
 
 func (m *Money) Currency() string {

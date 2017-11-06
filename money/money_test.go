@@ -16,7 +16,7 @@ func TestMoneyEquality(t *testing.T) {
 	assert.Equal(t, false, NewDollar(5).equals(NewDollar(6)))
 	assert.Equal(t, true, NewFranc(5).equals(NewFranc(5)))
 	assert.Equal(t, false, NewFranc(5).equals(NewFranc(6)))
-	// assert.Equal(t, false, NewFranc(5).equals(NewDollar(5)))
+	assert.Equal(t, false, NewFranc(5).equals(NewDollar(5)))
 }
 
 func TestMoneyFrancMultiplication(t *testing.T) {
@@ -28,4 +28,9 @@ func TestMoneyFrancMultiplication(t *testing.T) {
 func TestCurrency(t *testing.T) {
 	assert.Equal(t, "USD", NewDollar(1).Currency())
 	assert.Equal(t, "CHF", NewFranc(1).Currency())
+}
+
+// Oh it's not class ;)
+func TestDifferentClassEquality(t *testing.T) {
+	assert.Equal(t, NewMoney(10, "CHF").equals(NewMoney(10, "CHF")), true)
 }
