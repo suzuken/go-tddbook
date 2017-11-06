@@ -6,11 +6,14 @@ type IMoney interface {
 }
 
 type Money struct {
-	amount int
+	amount   int
+	currency string
 }
 
 func NewMoney(amount int) *Money {
-	return &Money{amount}
+	return &Money{
+		amount: amount,
+	}
 }
 
 func (m *Money) Amount() int {
@@ -30,8 +33,11 @@ type Dollar struct {
 	Money
 }
 
-func NewDollar(amount int) *Dollar {
-	return &Dollar{Money{amount}}
+func NewDollar(amount int, currency string) *Dollar {
+	return &Dollar{Money{
+		amount:   amount,
+		currency: "USD",
+	}}
 }
 
 func (d *Dollar) amount() int {
@@ -39,27 +45,30 @@ func (d *Dollar) amount() int {
 }
 
 func (d *Dollar) Currency() string {
-	return "USD"
+	return d.Money.currency
 }
 
 func (d *Dollar) times(multiplier int) *Dollar {
-	return NewDollar(d.amount() * multiplier)
+	return NewDollar(d.amount()*multiplier, "")
 }
 
 type Franc struct {
 	Money
 }
 
-func NewFranc(amount int) *Franc {
-	return &Franc{Money{amount}}
+func NewFranc(amount int, currency string) *Franc {
+	return &Franc{Money{
+		amount:   amount,
+		currency: "CHF",
+	}}
 }
 
 func (f *Franc) Currency() string {
-	return "CHF"
+	return f.Money.currency
 }
 
 func (f *Franc) times(multiplier int) *Franc {
-	return NewFranc(f.amount() * multiplier)
+	return NewFranc(f.amount()*multiplier, "")
 }
 
 func (f *Franc) amount() int {
