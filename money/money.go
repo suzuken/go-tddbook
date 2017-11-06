@@ -57,15 +57,15 @@ type Franc struct {
 	Money
 }
 
-func NewFranc(amount int) *Franc {
-	return &Franc{Money{
+func NewFranc(amount int) *Money {
+	return &Money{
 		amount:   amount,
 		currency: "CHF",
-	}}
+	}
 }
 
-func (f *Franc) times(multiplier int) *Franc {
-	return NewFranc(f.amount() * multiplier)
+func (f *Franc) times(multiplier int) *Money {
+	return NewMoney(f.amount()*multiplier, f.currency)
 }
 
 func (f *Franc) amount() int {
