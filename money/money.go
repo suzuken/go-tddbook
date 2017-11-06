@@ -26,6 +26,10 @@ func (m *Money) equals(object interface{}) bool {
 	return m.Amount() == mm.Amount()
 }
 
+func (m *Money) Currency() string {
+	return m.currency
+}
+
 func (m *Money) times(multiplier int) *Money {
 	return NewMoney(m.Amount()*multiplier, m.currency)
 }
@@ -34,11 +38,11 @@ type Dollar struct {
 	Money
 }
 
-func NewDollar(amount int) *Dollar {
-	return &Dollar{Money{
+func NewDollar(amount int) *Money {
+	return &Money{
 		amount:   amount,
 		currency: "USD",
-	}}
+	}
 }
 
 func (d *Dollar) amount() int {
@@ -49,8 +53,8 @@ func (d *Dollar) Currency() string {
 	return d.Money.currency
 }
 
-func (d *Dollar) times(multiplier int) *Dollar {
-	return NewDollar(d.amount() * multiplier)
+func (d *Dollar) times(multiplier int) *Money {
+	return NewMoney(d.amount()*multiplier, d.currency)
 }
 
 type Franc struct {
