@@ -41,19 +41,11 @@ func (m *Money) String() string {
 	return fmt.Sprintf("%d %s", m.amount, m.currency)
 }
 
-type Dollar struct {
-	Money
-}
-
 func NewDollar(amount int) *Money {
 	return &Money{
 		amount:   amount,
 		currency: "USD",
 	}
-}
-
-type Franc struct {
-	Money
 }
 
 func NewFranc(amount int) *Money {
