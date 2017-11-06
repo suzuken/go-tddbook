@@ -2,6 +2,14 @@ package money
 
 import "fmt"
 
+type Bank struct{}
+
+func (b *Bank) reduce(source Expression, to string) *Money {
+	return nil
+}
+
+type Expression interface{}
+
 type IMoney interface {
 	Amount() int
 	Currency() string
@@ -35,6 +43,10 @@ func (m *Money) Currency() string {
 
 func (m *Money) times(multiplier int) *Money {
 	return NewMoney(m.Amount()*multiplier, m.currency)
+}
+
+func (m *Money) plus(addend *Money) Expression {
+	return NewMoney(m.amount+addend.amount, m.currency)
 }
 
 func (m *Money) String() string {
