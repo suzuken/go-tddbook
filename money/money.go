@@ -10,6 +10,10 @@ func (b *Bank) reduce(source Expression, to string) *Money {
 
 type Expression interface{}
 
+type Sum struct {
+	addend, augend *Money
+}
+
 type IMoney interface {
 	Amount() int
 	Currency() string
@@ -46,7 +50,8 @@ func (m *Money) times(multiplier int) *Money {
 }
 
 func (m *Money) plus(addend *Money) Expression {
-	return NewMoney(m.amount+addend.amount, m.currency)
+	return &Sum{m, addend}
+	// return NewMoney(m.amount+addend.amount, m.currency)
 }
 
 func (m *Money) String() string {
