@@ -37,7 +37,7 @@ type Expression interface {
 }
 
 type Sum struct {
-	addend, augend Expression
+	augend, addend Expression
 }
 
 func (s *Sum) Reduce(bank Bank, to string) *Money {
@@ -47,7 +47,7 @@ func (s *Sum) Reduce(bank Bank, to string) *Money {
 }
 
 func (s *Sum) Plus(addend Expression) Expression {
-	return nil
+	return &Sum{s, addend}
 }
 
 type IMoney interface {
