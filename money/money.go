@@ -33,7 +33,7 @@ type Dollar struct {
 	Money
 }
 
-func NewDollar(amount int, currency string) *Dollar {
+func NewDollar(amount int) *Dollar {
 	return &Dollar{Money{
 		amount:   amount,
 		currency: "USD",
@@ -49,14 +49,14 @@ func (d *Dollar) Currency() string {
 }
 
 func (d *Dollar) times(multiplier int) *Dollar {
-	return NewDollar(d.amount()*multiplier, "")
+	return NewDollar(d.amount() * multiplier)
 }
 
 type Franc struct {
 	Money
 }
 
-func NewFranc(amount int, currency string) *Franc {
+func NewFranc(amount int) *Franc {
 	return &Franc{Money{
 		amount:   amount,
 		currency: "CHF",
@@ -68,7 +68,7 @@ func (f *Franc) Currency() string {
 }
 
 func (f *Franc) times(multiplier int) *Franc {
-	return NewFranc(f.amount()*multiplier, "")
+	return NewFranc(f.amount() * multiplier)
 }
 
 func (f *Franc) amount() int {
