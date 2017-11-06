@@ -24,26 +24,28 @@ func (d *Dollar) times(multiplier int) *Dollar {
 	return NewDollar(d.amount() * multiplier)
 }
 
-func (d *Dollar) equals(dd interface{}) bool {
-	m := dd.(IMoney)
+func (d *Dollar) equals(object interface{}) bool {
+	m := object.(IMoney)
 	return d.amount() == m.amount()
 }
 
 type Franc struct {
-	amount int
+	Money
 }
 
 func NewFranc(amount int) *Franc {
-	return &Franc{
-		amount: amount,
-	}
+	return &Franc{Money{amount}}
 }
 
-func (d *Franc) times(multiplier int) *Franc {
-	return NewFranc(d.amount * multiplier)
+func (f *Franc) times(multiplier int) *Franc {
+	return NewFranc(f.amount() * multiplier)
 }
 
-func (d *Franc) equals(object interface{}) bool {
-	franc := object.(Franc)
-	return d.amount == franc.amount
+func (f *Franc) amount() int {
+	return f.Money.amount
+}
+
+func (f *Franc) equals(object interface{}) bool {
+	m := object.(IMoney)
+	return f.amount() == m.amount()
 }
