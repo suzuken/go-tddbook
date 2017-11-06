@@ -4,25 +4,27 @@ import "fmt"
 
 type Bank struct{}
 
-func (b *Bank) reduce(source Expression, to string) *Money {
+func (b *Bank) Reduce(source Expression, to string) *Money {
 	money, ok := source.(*Money)
 	if ok {
-		return money
+		return money.Reduce(to)
 	}
 	sum, ok := source.(*Sum)
 	if !ok {
 		return nil
 	}
-	return sum.reduce(to)
+	return sum.Reduce(to)
 }
 
-type Expression interface{}
+type Expression interface {
+	Reduce(to string) *Money
+}
 
 type Sum struct {
 	addend, augend *Money
 }
 
-func (s *Sum) reduce(to string) *Money {
+func (s *Sum) Reduce(to string) *Money {
 	amount := s.augend.amount + s.addend.amount
 	return NewMoney(amount, to)
 }
@@ -64,7 +66,10 @@ func (m *Money) times(multiplier int) *Money {
 
 func (m *Money) plus(addend *Money) Expression {
 	return &Sum{m, addend}
-	// return NewMoney(m.amount+addend.amount, m.currency)
+}
+
+func (m *Money) Reduce(to string) *Money {
+	return m
 }
 
 func (m *Money) String() string {
