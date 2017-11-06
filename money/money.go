@@ -49,10 +49,6 @@ func (d *Dollar) amount() int {
 	return d.Money.amount
 }
 
-func (d *Dollar) Currency() string {
-	return d.Money.currency
-}
-
 func (d *Dollar) times(multiplier int) *Money {
 	return NewMoney(d.amount()*multiplier, d.currency)
 }
@@ -66,10 +62,6 @@ func NewFranc(amount int) *Franc {
 		amount:   amount,
 		currency: "CHF",
 	}}
-}
-
-func (f *Franc) Currency() string {
-	return f.Money.currency
 }
 
 func (f *Franc) times(multiplier int) *Franc {
