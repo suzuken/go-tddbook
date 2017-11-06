@@ -5,7 +5,12 @@ import "fmt"
 type Bank struct{}
 
 func (b *Bank) reduce(source Expression, to string) *Money {
-	return NewDollar(10)
+	sum, ok := source.(*Sum)
+	if !ok {
+		return nil
+	}
+	amount := sum.augend.amount + sum.addend.amount
+	return NewMoney(amount, to)
 }
 
 type Expression interface{}
