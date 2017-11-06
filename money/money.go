@@ -1,11 +1,20 @@
 package money
 
 type IMoney interface {
-	amount() int
+	Amount() int
 }
 
 type Money struct {
 	amount int
+}
+
+func (m *Money) Amount() int {
+	return m.amount
+}
+
+func (m *Money) equals(object interface{}) bool {
+	mm := object.(IMoney)
+	return m.Amount() == mm.Amount()
 }
 
 type Dollar struct {
@@ -24,11 +33,6 @@ func (d *Dollar) times(multiplier int) *Dollar {
 	return NewDollar(d.amount() * multiplier)
 }
 
-func (d *Dollar) equals(object interface{}) bool {
-	m := object.(IMoney)
-	return d.amount() == m.amount()
-}
-
 type Franc struct {
 	Money
 }
@@ -43,9 +47,4 @@ func (f *Franc) times(multiplier int) *Franc {
 
 func (f *Franc) amount() int {
 	return f.Money.amount
-}
-
-func (f *Franc) equals(object interface{}) bool {
-	m := object.(IMoney)
-	return f.amount() == m.amount()
 }
