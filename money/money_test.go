@@ -24,7 +24,7 @@ func TestCurrency(t *testing.T) {
 
 func TestSimpleAddition(t *testing.T) {
 	five := NewDollar(5)
-	sum := five.plus(five)
+	sum := five.Plus(five)
 	bank := Bank{}
 	reduced := bank.Reduce(sum, "USD")
 	assert.Equal(t, NewDollar(10), reduced)
@@ -32,7 +32,7 @@ func TestSimpleAddition(t *testing.T) {
 
 func TestPlusReturns(t *testing.T) {
 	five := NewDollar(5)
-	result := five.plus(five)
+	result := five.Plus(five)
 	sum, ok := result.(*Sum)
 	if !ok {
 		t.Fatal("want Sum")
@@ -71,6 +71,6 @@ func TestMixedAddition(t *testing.T) {
 	tenFrancs := NewFranc(10)
 	bank := NewBank()
 	bank.addRate("CHF", "USD", 2)
-	result := bank.Reduce(fiveBucks.plus(tenFrancs), "USD")
+	result := bank.Reduce(fiveBucks.Plus(tenFrancs), "USD")
 	assert.Equal(t, NewDollar(10), result)
 }
