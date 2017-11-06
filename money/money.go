@@ -5,21 +5,28 @@ import "fmt"
 type Bank struct{}
 
 func (b *Bank) Reduce(source Expression, to string) *Money {
-	return source.Reduce(to)
+	return source.Reduce(*b, to)
 }
 
 func (b *Bank) addRate(from, to string, rate int) {
 }
 
+func (b *Bank) rate(from, to string) int {
+	if from == "CHF" && to == "USD" {
+		return 2
+	}
+	return 1
+}
+
 type Expression interface {
-	Reduce(to string) *Money
+	Reduce(bank Bank, to string) *Money
 }
 
 type Sum struct {
 	addend, augend *Money
 }
 
-func (s *Sum) Reduce(to string) *Money {
+func (s *Sum) Reduce(bank Bank, to string) *Money {
 	amount := s.augend.amount + s.addend.amount
 	return NewMoney(amount, to)
 }
@@ -63,11 +70,9 @@ func (m *Money) plus(addend *Money) Expression {
 	return &Sum{m, addend}
 }
 
-func (m *Money) Reduce(to string) *Money {
-	if m.currency == "CHF" && to == "USD" {
-		return NewMoney(m.amount/2, to)
-	}
-	return NewMoney(m.amount, to)
+func (m *Money) Reduce(bank Bank, to string) *Money {
+	rate := bank.rate(m.currency, to)
+	return NewMoney(m.amount/rate, to)
 }
 
 func (m *Money) String() string {
