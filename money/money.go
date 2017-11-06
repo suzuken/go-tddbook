@@ -51,14 +51,6 @@ func NewDollar(amount int) *Money {
 	}
 }
 
-func (d *Dollar) amount() int {
-	return d.Money.amount
-}
-
-func (d *Dollar) times(multiplier int) *Money {
-	return NewMoney(d.amount()*multiplier, d.currency)
-}
-
 type Franc struct {
 	Money
 }
@@ -68,12 +60,4 @@ func NewFranc(amount int) *Money {
 		amount:   amount,
 		currency: "CHF",
 	}
-}
-
-func (f *Franc) times(multiplier int) *Money {
-	return NewMoney(f.amount()*multiplier, f.currency)
-}
-
-func (f *Franc) amount() int {
-	return f.Money.amount
 }
