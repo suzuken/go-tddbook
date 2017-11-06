@@ -27,8 +27,3 @@ func TestCurrency(t *testing.T) {
 	assert.Equal(t, "USD", NewDollar(1).Currency())
 	assert.Equal(t, "CHF", NewFranc(1).Currency())
 }
-
-// Oh it's not class ;)
-func TestDifferentClassEquality(t *testing.T) {
-	assert.Equal(t, NewMoney(10, "CHF").equals(NewMoney(10, "CHF")), true)
-}
