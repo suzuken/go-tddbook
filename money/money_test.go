@@ -7,8 +7,8 @@ import (
 
 func TestMoneyMultiplication(t *testing.T) {
 	five := NewDollar(5)
-	assert.Equal(t, NewDollar(10), five.times(2))
-	assert.Equal(t, NewDollar(15), five.times(3))
+	assert.Equal(t, NewDollar(10), five.Times(2))
+	assert.Equal(t, NewDollar(15), five.Times(3))
 }
 
 func TestMoneyEquality(t *testing.T) {
@@ -85,4 +85,15 @@ func TestSumPlusMoney(t *testing.T) {
 	exp := sum.Plus(fiveBucks)
 	result := bank.Reduce(exp, "USD")
 	assert.Equal(t, NewDollar(15), result)
+}
+
+func TestSumTimes(t *testing.T) {
+	fiveBucks := NewDollar(5)
+	tenFrancs := NewFranc(10)
+	bank := NewBank()
+	bank.addRate("CHF", "USD", 2)
+	sum := &Sum{fiveBucks, tenFrancs}
+	exp := sum.Times(2)
+	result := bank.Reduce(exp, "USD")
+	assert.Equal(t, NewDollar(20), result)
 }

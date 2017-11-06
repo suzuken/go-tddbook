@@ -34,6 +34,7 @@ type Pair struct {
 type Expression interface {
 	Reduce(bank Bank, to string) *Money
 	Plus(addend Expression) Expression
+	Times(multiplier int) Expression
 }
 
 type Sum struct {
@@ -48,6 +49,10 @@ func (s *Sum) Reduce(bank Bank, to string) *Money {
 
 func (s *Sum) Plus(addend Expression) Expression {
 	return &Sum{s, addend}
+}
+
+func (s *Sum) Times(multiplier int) Expression {
+	return &Sum{s.augend.Times(multiplier), s.addend.Times(multiplier)}
 }
 
 type IMoney interface {
@@ -81,7 +86,7 @@ func (m *Money) Currency() string {
 	return m.currency
 }
 
-func (m *Money) times(multiplier int) Expression {
+func (m *Money) Times(multiplier int) Expression {
 	return NewMoney(m.Amount()*multiplier, m.currency)
 }
 
