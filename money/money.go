@@ -9,14 +9,18 @@ func (b *Bank) reduce(source Expression, to string) *Money {
 	if !ok {
 		return nil
 	}
-	amount := sum.augend.amount + sum.addend.amount
-	return NewMoney(amount, to)
+	return sum.reduce(to)
 }
 
 type Expression interface{}
 
 type Sum struct {
 	addend, augend *Money
+}
+
+func (s *Sum) reduce(to string) *Money {
+	amount := s.augend.amount + s.addend.amount
+	return NewMoney(amount, to)
 }
 
 type IMoney interface {
