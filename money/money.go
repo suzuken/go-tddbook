@@ -5,6 +5,10 @@ import "fmt"
 type Bank struct{}
 
 func (b *Bank) reduce(source Expression, to string) *Money {
+	money, ok := source.(*Money)
+	if ok {
+		return money
+	}
 	sum, ok := source.(*Sum)
 	if !ok {
 		return nil
