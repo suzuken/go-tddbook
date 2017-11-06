@@ -2,20 +2,33 @@ package money
 
 import "fmt"
 
-type Bank struct{}
+type Bank struct {
+	rates map[Pair]int
+}
+
+func NewBank() *Bank {
+	return &Bank{
+		rates: make(map[Pair]int),
+	}
+}
 
 func (b *Bank) Reduce(source Expression, to string) *Money {
 	return source.Reduce(*b, to)
 }
 
 func (b *Bank) addRate(from, to string, rate int) {
+	b.rates[Pair{from, to}] = rate
 }
 
 func (b *Bank) rate(from, to string) int {
-	if from == "CHF" && to == "USD" {
-		return 2
+	if from == to {
+		return 1
 	}
-	return 1
+	return b.rates[Pair{from, to}]
+}
+
+type Pair struct {
+	from, to string
 }
 
 type Expression interface {
