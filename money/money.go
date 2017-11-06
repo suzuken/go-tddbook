@@ -1,5 +1,7 @@
 package money
 
+import "fmt"
+
 type IMoney interface {
 	Amount() int
 	Currency() string
@@ -32,6 +34,10 @@ func (m *Money) Currency() string {
 
 func (m *Money) times(multiplier int) *Money {
 	return NewMoney(m.Amount()*multiplier, m.currency)
+}
+
+func (m *Money) String() string {
+	return fmt.Sprintf("%d %s", m.amount, m.currency)
 }
 
 type Dollar struct {
